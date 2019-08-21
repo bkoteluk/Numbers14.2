@@ -5,25 +5,30 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class NumbersTest {
-    public static void main(String[] args) {
-        File file = new File("numbers.txt");
-        try {
-            Scanner scanner = new Scanner(file);
-            List<Integer> list = new LinkedList<>();
+    private static List<Integer> list = new LinkedList<>();
+    private static Set<Integer> numbersSet = new TreeSet<>();
 
-            Set<Integer> numbersSet = new TreeSet<>();
-            while (scanner.hasNextInt()) {
-                int num = scanner.nextInt();
-                list.add(num);
-                numbersSet.add(num);
-            }
-            System.out.println(list);
-            System.out.println(numbersSet);
-            printStat(list, numbersSet);
+    public static void main(String[] args) {
+        try {
+           readNumbers();
+           System.out.println(list);
+           System.out.println(numbersSet);
+           printStat(list, numbersSet);
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());;
         }
+    }
+
+    public static void readNumbers() throws FileNotFoundException {
+        File file = new File("numbers.txt");
+        Scanner scanner = new Scanner(file);
+        while (scanner.hasNextInt()) {
+            int num = scanner.nextInt();
+            list.add(num);
+            numbersSet.add(num);
+        }
+        scanner.close();
     }
 
     public static void printStat(List<Integer> list, Set<Integer> set) {
